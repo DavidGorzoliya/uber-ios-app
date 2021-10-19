@@ -8,10 +8,8 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController {
-    
-    // MARK: - Properties
-    
+ final class LoginVC: UIViewController {
+
     private let logoLabel: UILabel = {
         let logoLabel = UILabel()
         logoLabel.text = "UBER"
@@ -55,18 +53,17 @@ class LoginVC: UIViewController {
         
         let dontHaveAccountAttributedText = NSMutableAttributedString(string: "Don't have an account?  ",
                                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
-                                                                                   NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                                                                         NSAttributedString.Key.foregroundColor: UIColor.lightGray
+                                                                ])
         dontHaveAccountAttributedText.append(NSAttributedString(string: "Sign Up",
-                                                                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
-                                                                             NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint
+                                                                attributes: [NSAttributedString.Key.font:         UIFont.boldSystemFont(ofSize: 16),
+                                                                         NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint
                                                                 ]))
         dontHaveAccountButton.setAttributedTitle(dontHaveAccountAttributedText, for: .normal)
         dontHaveAccountButton.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         
         return dontHaveAccountButton
     }()
-    
-    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,15 +71,13 @@ class LoginVC: UIViewController {
         configureSubviews()
         configureUI()
     }
-    
-    // MARK: - Selectors
-    
-    @objc func handleShowSignUp() {
+
+    @objc private func handleShowSignUp() {
         let signUpVC = SignUpVC()
         navigationController?.pushViewController(signUpVC, animated: true)
     }
     
-    @objc func handleLogin() {
+    @objc private func handleLogin() {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
@@ -97,10 +92,8 @@ class LoginVC: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    // MARK: - Helpers
-    
-    func configureSubviews() {
+
+   private func configureSubviews() {
         view.addSubview(logoLabel)
         logoLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         logoLabel.centerX(inView: view)
@@ -118,14 +111,13 @@ class LoginVC: UIViewController {
         dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .backgroundColor
         configureNavBar()
     }
     
-    func configureNavBar() {
+    private func configureNavBar() {
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
     }
-    
 }

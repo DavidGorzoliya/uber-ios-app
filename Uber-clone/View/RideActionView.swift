@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 
-protocol RideActionViewDelegate: class {
+protocol RideActionViewDelegate: AnyObject {
     func uploadTrip(_ view: RideActionView)
 }
 
@@ -52,10 +52,8 @@ enum ButtonAction: CustomStringConvertible {
     }
 }
 
-class RideActionView: UIView {
-    
-    // MARK: - Properties
-    
+final class RideActionView: UIView {
+
     weak var delegate: RideActionViewDelegate?
     
     var destination: MKPlacemark? {
@@ -127,9 +125,7 @@ class RideActionView: UIView {
         
         return actionButton
     }()
-    
-    // MARK: - Lifecycle
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -140,22 +136,18 @@ class RideActionView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Selectors
-    
-    @objc func rideButtonPressed() {
+
+    @objc private func rideButtonPressed() {
         delegate?.uploadTrip(self)
     }
-    
-    // MARK: - Helpers
-    
-    func configureUI() {
+
+   private func configureUI() {
         backgroundColor = .white
         addShadow()
         configureSubviews()
     }
     
-    func configureUI(withConfig: RideActionViewConfiguration) {
+     func configureUI(withConfig: RideActionViewConfiguration) {
         switch config {
         case .requestRide:
             buttonAction = .requestRide
@@ -172,8 +164,8 @@ class RideActionView: UIView {
             break
         }
     }
-    
-    func configureSubviews() {
+
+    private func configureSubviews() {
         let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
         stack.axis = .vertical
         stack.spacing = 4
@@ -199,5 +191,4 @@ class RideActionView: UIView {
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
     }
-    
 }

@@ -7,15 +7,13 @@
 
 import UIKit
 
-protocol LocationInputViewDelegate: class {
+protocol LocationInputViewDelegate: AnyObject {
     func dismisslocationInputView()
     func executeSearch(query: String)
 }
 
-class LocationInputView: UIView {
+final class LocationInputView: UIView {
 
-    // MARK: - Properties
-    
     weak var delegate: LocationInputViewDelegate?
     
     private let backButton: UIButton = {
@@ -26,7 +24,7 @@ class LocationInputView: UIView {
         return backButton
     }()
     
-    let fullnameTitleLabel: UILabel = {
+     let fullnameTitleLabel: UILabel = {
         let fullnameTitleLabel = UILabel()
         fullnameTitleLabel.text = "John Doe"
         fullnameTitleLabel.font = UIFont.systemFont(ofSize: 16)
@@ -91,9 +89,7 @@ class LocationInputView: UIView {
         
         return destinationLocationTextField
     }()
-    
-    // MARK: - Lifecycle
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -103,23 +99,19 @@ class LocationInputView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Selectors
-    
-    @objc func handleBackTapped() {
+
+    @objc private func handleBackTapped() {
         delegate?.dismisslocationInputView()
     }
-    
-    // MARK: - Helpers
-    
-    func configureUI() {
+
+   private func configureUI() {
         backgroundColor = .white
         addShadow()
         
         configureSubviews()
     }
     
-    func configureSubviews() {
+   private func configureSubviews() {
         addSubview(backButton)
         backButton.anchor(top: topAnchor, left: leftAnchor, paddingTop: 44, paddingLeft: 14, width: 24, height: 25)
         
@@ -145,8 +137,6 @@ class LocationInputView: UIView {
     }
     
 }
-
-// MARK: - UITextFieldDelegate
 
 extension LocationInputView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

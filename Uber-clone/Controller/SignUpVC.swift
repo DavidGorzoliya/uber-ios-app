@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import GeoFire
 
-class SignUpVC: UIViewController {
+final class SignUpVC: UIViewController {
     
     // MARK: - Properties
     
@@ -86,35 +86,32 @@ class SignUpVC: UIViewController {
     private let alreadyHaveAccountButton: UIButton = {
         let alreadyHaveAccountButton = UIButton(type: .system)
         
-        let alreadyHaveAccountAttributedText = NSMutableAttributedString(string: "Already have an account?  ",
+        let alreadyHaveAccountAttributedText = NSMutableAttributedString(string: "Already have an account? ",
                                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
-                                                                                   NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                                                                         NSAttributedString.Key.foregroundColor: UIColor.lightGray
+                                                                ])
         alreadyHaveAccountAttributedText.append(NSAttributedString(string: "Sign In",
-                                                                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
-                                                                             NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint
+                                                                     attributes: [NSAttributedString.Key.font:       UIFont.boldSystemFont(ofSize: 16),
+                                                                         NSAttributedString.Key.foregroundColor: UIColor.mainBlueTint
                                                                 ]))
         alreadyHaveAccountButton.setAttributedTitle(alreadyHaveAccountAttributedText, for: .normal)
         alreadyHaveAccountButton.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
         
         return alreadyHaveAccountButton
     }()
-    
-    // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureSubviews()
         configureUI()
     }
-    
-    // MARK: - Selectors
-    
-    @objc func handleShowLogin() {
+
+    @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleSignUp() {
+    @objc private func handleSignUp() {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let fullname = fullnameTextField.text else { return }
@@ -144,9 +141,7 @@ class SignUpVC: UIViewController {
             self.uploadUserDataAndShowHomeVC(uid: uid, values: values)
         }
     }
-    
-    // MARK: - Helpers
-    
+
     func uploadUserDataAndShowHomeVC(uid: String, values: [String: Any]) {
         REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
             guard let homeVC = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController as? HomeVC else { return }
@@ -155,7 +150,7 @@ class SignUpVC: UIViewController {
         }
     }
     
-    func configureSubviews() {
+   private func configureSubviews() {
         view.addSubview(logoLabel)
         logoLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         logoLabel.centerX(inView: view)
@@ -173,7 +168,7 @@ class SignUpVC: UIViewController {
         alreadyHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 32)
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .backgroundColor
     }
 }

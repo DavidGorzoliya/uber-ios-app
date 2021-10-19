@@ -20,7 +20,7 @@ struct Service {
     
     private init() { }
     
-    func fetchUserData(uid: String, completion: @escaping(User) -> Void) {
+     func fetchUserData(uid: String, completion: @escaping(User) -> Void) {
         REF_USERS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             let uid = snapshot.key
@@ -30,7 +30,7 @@ struct Service {
         }
     }
     
-    func fetchDrivers(location: CLLocation, completion: @escaping(User) -> Void) {
+     func fetchDrivers(location: CLLocation, completion: @escaping(User) -> Void) {
         let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
         
         REF_DRIVER_LOCATIONS.observe(.value) { (snapshot) in

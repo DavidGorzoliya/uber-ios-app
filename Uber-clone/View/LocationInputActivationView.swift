@@ -7,14 +7,12 @@
 
 import UIKit
 
-protocol LocationInputActivationViewDelegate: class {
+protocol LocationInputActivationViewDelegate: AnyObject {
     func presentLocationInputView()
 }
 
-class LocationInputActivationView: UIView {
-    
-    // MARK: - Properties
-    
+final class LocationInputActivationView: UIView {
+
     weak var delegate: LocationInputActivationViewDelegate?
     
     private let indicatorView: UIView = {
@@ -33,9 +31,7 @@ class LocationInputActivationView: UIView {
         
         return placeholderLabel
     }()
-    
-    // MARK: - Lifecycle
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -48,28 +44,23 @@ class LocationInputActivationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Selectors
-    
+
     @objc func presentLocationInputView() {
         delegate?.presentLocationInputView()
     }
-    
-    // MARK: - Helpers
-    
-    func configureUI() {
+
+  private func configureUI() {
         backgroundColor = .white
         addShadow()
         
         configureSubviews()
     }
     
-    func configureSubviews() {
+    private func configureSubviews() {
         addSubview(indicatorView)
         indicatorView.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 16)
         
         addSubview(placeholderLabel)
         placeholderLabel.centerY(inView: self, leftAnchor: indicatorView.rightAnchor, paddingLeft: 20)
     }
-    
 }

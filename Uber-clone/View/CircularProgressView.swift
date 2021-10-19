@@ -7,16 +7,12 @@
 
 import UIKit
 
-class CircularProgressView: UIView {
-    
-    // MARK: - Properties
-    
-    var progressLayer: CAShapeLayer!
-    var trackLayer: CAShapeLayer!
-    var pulsatingLayer: CAShapeLayer!
-    
-    // MARK: - Lifecycle
-    
+final class CircularProgressView: UIView {
+
+    private var progressLayer: CAShapeLayer!
+    private var trackLayer: CAShapeLayer!
+    private var pulsatingLayer: CAShapeLayer!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCirlceLayers()
@@ -25,9 +21,7 @@ class CircularProgressView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Helper Functions
-    
+
     private func configureCirlceLayers() {
         pulsatingLayer = circleShapeLayer(strokeColor: .clear, fillColor: .pulsatingFillColor)
         layer.addSublayer(pulsatingLayer)
@@ -58,7 +52,7 @@ class CircularProgressView: UIView {
                 
         return layer
     }
-    
+
     func animatePulsatingLayer() {
         let animation = CABasicAnimation(keyPath: "transform.scale")
         
@@ -86,5 +80,4 @@ class CircularProgressView: UIView {
         
         CATransaction.commit()
     }
-    
 }

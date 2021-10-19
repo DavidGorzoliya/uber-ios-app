@@ -8,14 +8,12 @@
 import UIKit
 import MapKit
 
-protocol PickupVCDelegate: class {
+protocol PickupVCDelegate: AnyObject {
     func didAcceptTrip(_ trip: Trip)
 }
 
-class PickupVC: UIViewController {
-    
-    // MARK: - Properties
-    
+final class PickupVC: UIViewController {
+
     weak var delegate: PickupVCDelegate?
     
     private lazy var circularProgressView: CircularProgressView = {
@@ -30,7 +28,7 @@ class PickupVC: UIViewController {
         
         return cp
     }()
-    
+
     private let mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.setDimensions(height: 270, width: 270)
@@ -72,9 +70,7 @@ class PickupVC: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,29 +87,25 @@ class PickupVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Selectors
-    
-    @objc func handleDismissal() {
+
+    @objc private func handleDismissal() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func animateProgress() {
+    @objc private func animateProgress() {
         circularProgressView.animatePulsatingLayer()
         circularProgressView.setProgressWithAnimation(duration: 10, value: 0) {
             
         }
     }
     
-    @objc func handleAcceptTrip() {
+    @objc private func handleAcceptTrip() {
         Service.shared.acceptTrip(trip: trip) { (error, ref) in
             self.delegate?.didAcceptTrip(self.trip)
         }
     }
-    
-    // MARK: - Helpers
-    
-    func configureMapView() {
+
+   private func configureMapView() {
         let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: false)
         
@@ -123,13 +115,13 @@ class PickupVC: UIViewController {
         mapView.selectAnnotation(anno, animated: true)
     }
     
-    func configureUI() {
+   private func configureUI() {
         view.backgroundColor = .backgroundColor
         
         configureSubviews()
     }
     
-    func configureSubviews() {
+    private func configureSubviews() {
         view.addSubview(cancelButton)
         cancelButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 16)
         
@@ -148,8 +140,5 @@ class PickupVC: UIViewController {
         
         view.addSubview(acceptTripButton)
         acceptTripButton.anchor(top: pickupLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 16, paddingLeft: 32, paddingRight: 32, height: 50)
-        
-        
     }
-
 }

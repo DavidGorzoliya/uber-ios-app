@@ -14,7 +14,6 @@ enum TripState: Int {
     case completed
 }
 
-
 struct Trip {
     var pickupCoordinates: CLLocationCoordinate2D!
     var destinationCoordinates: CLLocationCoordinate2D!

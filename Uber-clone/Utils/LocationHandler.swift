@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-class LocationHandler: NSObject, CLLocationManagerDelegate {
+final class LocationHandler: NSObject, CLLocationManagerDelegate {
     
     static let shared = LocationHandler()
     var locationManager: CLLocationManager!
@@ -25,5 +25,4 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         }
     }
-    
 }

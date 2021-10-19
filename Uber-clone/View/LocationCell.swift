@@ -8,10 +8,8 @@
 import UIKit
 import MapKit
 
-class LocationCell: UITableViewCell {
+final class LocationCell: UITableViewCell {
 
-    // MARK: - Properties
-    
     var placemark: MKPlacemark? {
         didSet {
             placeTitleLabel.text = placemark?.name
@@ -36,9 +34,7 @@ class LocationCell: UITableViewCell {
         
         return addressLabel
     }()
-    
-    // MARK: - Lifecycle
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -50,10 +46,8 @@ class LocationCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Helpers
-    
-    func configureSubviews() {
+
+    private func configureSubviews() {
         let vStack = UIStackView(arrangedSubviews: [placeTitleLabel, addressLabel])
         vStack.axis = .vertical
         vStack.distribution = .fillEqually
@@ -64,5 +58,4 @@ class LocationCell: UITableViewCell {
         
         addSubview(vStack)
     }
-    
 }

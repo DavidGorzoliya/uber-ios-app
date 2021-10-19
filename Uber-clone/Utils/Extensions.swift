@@ -8,8 +8,6 @@
 import UIKit
 import MapKit
 
-// MARK: - UIColor
-
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor.init(red: red/255, green: green/255, blue: blue/255, alpha: 1.0)
@@ -22,7 +20,6 @@ extension UIColor {
     static let pulsatingFillColor = UIColor.rgb(red: 86, green: 30, blue: 63)
 }
 
-// MARK: - UIView
 
 extension UIView {
     
@@ -94,7 +91,7 @@ extension UIView {
         }
     }
     
-    func centerX(inView view: UIView) {
+     func centerX(inView view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
@@ -122,9 +119,6 @@ extension UIView {
     
 }
 
-
-// MARK: - UITextField
-
 extension UITextField {
     
     func textField(withPlaceholder placeholder: String, isSecureTextEntry: Bool) -> UITextField {
@@ -135,14 +129,12 @@ extension UITextField {
         textField.keyboardAppearance = .dark
         textField.isSecureTextEntry = isSecureTextEntry
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+                                                            attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         
         return textField
     }
     
 }
-
-// MARK: - MKPlacemark
 
 extension MKPlacemark {
     var address: String? {
@@ -153,9 +145,6 @@ extension MKPlacemark {
         }
     }
 }
-
-
-// MARK: - MKMapView
 
 extension MKMapView {
     func zoomToFit(annotations: [MKAnnotation]) {
@@ -172,8 +161,6 @@ extension MKMapView {
         setVisibleMapRect(zoomRect, edgePadding: insets, animated: true)
     }
 }
-
-// MARK: - UIViewController
 
 extension UIViewController {
     func shouldPresentLoadingView(_ present: Bool, message: String? = nil) {
